@@ -1,0 +1,6 @@
+# Core Django & DRF
+Django==6.0.2
+djangorestframework==3.16.1
+
+# Development tools
+pre-commit==4.5.1
