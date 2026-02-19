@@ -31,7 +31,9 @@ SECRET_KEY = "django-insecure-1uvao0x6nml7*yxdq36qj9q_)0$llk-#f_1v9)6c$s0s(6^znz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "buildmyfurniture-backend-production.up.railway.app",
+]
 
 
 # Application definition
