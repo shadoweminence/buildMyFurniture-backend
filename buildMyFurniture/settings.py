@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "furniture",
     "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 AUTH_USER_MODEL = "furniture.User"
 
@@ -46,6 +48,20 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+}
+SIMPLE_JWT = {
+    # How long the access token is valid
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),  # change 5 to whatever you want
+    # How long the refresh token is valid
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),  # change 7 to whatever you want
+    # Optional: automatically rotate refresh tokens when used
+    # it is used to fetch new refresh token everytime we fetch a new access token
+    "ROTATE_REFRESH_TOKENS": True,
+    # Optional: blacklist old refresh tokens when rotated
+    "BLACKLIST_AFTER_ROTATION": True,
+    # Optional: algorithm & other settings
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,  # defaults to Django SECRET_KEY
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
