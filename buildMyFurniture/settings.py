@@ -42,6 +42,19 @@ INSTALLED_APPS = [
 ]
 AUTH_USER_MODEL = "furniture.User"
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "[EMAIL_ADDRESS]"
+EMAIL_HOST_PASSWORD = "[PASSWORD]"
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -78,8 +91,12 @@ WSGI_APPLICATION = "buildMyFurniture.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "furniture_db",
+        "USER": "furniture_user",
+        "PASSWORD": "Prashant1stBigProject",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
