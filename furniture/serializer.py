@@ -46,3 +46,29 @@ class RegisterSerializer(serializers.ModelSerializer):
         validated_data.pop("confirm_password")
         validated_data["password"] = make_password(validated_data["password"])
         return User.objects.create(**validated_data)
+
+
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        user = User.objects.filter(email=email).first()
+        if not user:
+            raise serializers.ValidationError("If email exists, reset link sent.")
+        attrs["user"] = user
+        return attrs
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField()
+    confirm_password = serializers.CharField()
+
+    def validate(self, attrs):
+        new_password = attrs.get("new_password")
+        confirm_password = attrs.get("confirm_password")
+
+        if new_password != confirm_password:
+            raise serializers.ValidationError("Passwords do not match")
+
+        return attrs
