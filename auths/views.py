@@ -90,7 +90,7 @@ class RefreshAccessTokenView(APIView):
             )
 
 
-class RegisterUserViewSet(APIView):
+class RegisterUserView(APIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
 
