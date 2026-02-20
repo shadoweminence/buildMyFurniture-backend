@@ -7,7 +7,6 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework.views import APIView
 from .models import User
-from rest_framework import viewsets
 from .serializer import (
     UserSerializer,
     RegisterSerializer,
@@ -20,14 +19,18 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
 
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 
 class LoginUserView(APIView):
@@ -87,11 +90,11 @@ class RefreshAccessTokenView(APIView):
             )
 
 
-class RegisterUserViewSet(viewsets.ModelViewSet):
+class RegisterUserViewSet(APIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
 
-    def create(self, request, *args, **kwargs):
+    def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
