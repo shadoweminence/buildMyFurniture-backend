@@ -28,5 +28,5 @@ urlpatterns = [
         name="swagger-ui",
     ),
     path("auth/", include("auths.urls")),
-    # path("category/", include("categories.urls")),
+    path("category/", include("categories.urls")),
 ]
