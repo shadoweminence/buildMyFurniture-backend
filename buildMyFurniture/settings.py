@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "furniture",
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
+    "drf_spectacular",
 ]
 AUTH_USER_MODEL = "auths.User"
 
@@ -54,6 +55,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 SIMPLE_JWT = {
     # How long the access token is valid
