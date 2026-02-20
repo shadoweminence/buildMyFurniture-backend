@@ -68,9 +68,7 @@ CLOUDINARY_STORAGE = {
     "API_SECRET": os.environ.get("CLOUDINARY_SECRET"),
 }
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-print("Cloud name:", os.environ.get("CLOUD_NAME"))
-print("Cloudinary key:", os.environ.get("CLOUDINARY_KEY"))
-print("Cloudinary secret:", os.environ.get("CLOUDINARY_SECRET"))
+
 
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "buildMyFurniture.utils.custom_exception_handler",
