@@ -15,8 +15,16 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 import dj_database_url
+import cloudinary
 
 load_dotenv()
+
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_SECRET"),
+)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-1uvao0x6nml7*yxdq36qj9q_)0$llk-#f_1v9)6c$s0s(6^znz"
+SECRET_KEY = os.environ.get("DJANGO_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -49,8 +57,20 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
     "drf_spectacular",
+    "cloudinary",
+    "cloudinary_storage",
 ]
 AUTH_USER_MODEL = "auths.User"
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_SECRET"),
+}
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+print("Cloud name:", os.environ.get("CLOUD_NAME"))
+print("Cloudinary key:", os.environ.get("CLOUDINARY_KEY"))
+print("Cloudinary secret:", os.environ.get("CLOUDINARY_SECRET"))
 
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "buildMyFurniture.utils.custom_exception_handler",

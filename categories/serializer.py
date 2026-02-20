@@ -6,8 +6,14 @@ from django.utils.text import slugify
 
 class CategorySerializer(serializers.ModelSerializer):
     name = serializers.CharField(
-        max_length=100, validators=[UniqueValidator(queryset=Category.objects.all())]
+        max_length=100,
+        validators=[
+            UniqueValidator(
+                queryset=Category.objects.all(), message="name should be unique"
+            )
+        ],
     )
+    image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
@@ -18,3 +24,8 @@ class CategorySerializer(serializers.ModelSerializer):
         if not data.get("slug"):
             data["slug"] = slugify(data.get("name"))
         return data
+
+    def get_image_url(self, obj):
+        if obj.image:
+            return obj.image.url
+        return None
