@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "auths.User"
 
 REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "buildMyFurniture.utils.custom_exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
