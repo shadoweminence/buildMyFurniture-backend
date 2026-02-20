@@ -20,8 +20,12 @@ from rest_framework_simplejwt.exceptions import TokenError
 
 
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.throttling import UserRateThrottle
+
 
 # Create your views here.
+class LoginThrottle(UserRateThrottle):
+    scope = "login"
 
 
 class ProfileView(APIView):
@@ -34,6 +38,8 @@ class ProfileView(APIView):
 
 
 class LoginUserView(APIView):
+    throttle_classes = [LoginThrottle]
+
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
